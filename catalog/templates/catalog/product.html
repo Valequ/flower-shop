@@ -1,0 +1,34 @@
+{% extends "main/base_light.html" %}
+{% load static %}
+{% block content %}
+<div class="content_column">
+    <div class="line2"></div>
+    <div class="product-container">
+            <img class="product-image" src="{% static 'main/img/decoration/flower.jpg' %}" alt="Розовые мечты">
+            
+            <div class="product-info">
+                <div class="product-header">
+                    <h1 class="product-title">Розовые мечты</h1>
+                    
+                    <div class="product-prices">
+                        <div class="product-price-current">1.800₽</div>
+                        <div class="product-price-old">3.600₽</div>
+                    </div>
+                    
+                    <p class="product-description">
+                        Букет «Розовые мечты» — нежность в каждом лепестке. 
+                        Пышная композиция из розовых роз, пионов и эустом, 
+                        окутанная облаком зелени. Идеальный символ любви, 
+                        нежности и восхищения.
+                    </p>
+                </div>
+                
+                <button class="add-to-cart-btn">
+                    В корзину
+                </button>
+            </div>
+        </div>
+        <div class="line"></div>
+    </div>
+</div>
+{% endblock content %}

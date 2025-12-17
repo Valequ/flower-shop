@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <title>Букетная</title>
+</head>
+<body>
+
+            <header class="header">
+                <img src="{% static 'main/img/decoration/logo.png' %}" alt="">
+            <nav class="nav-menu">
+                <a href="{% url 'main:home' %}" class="nav-link">Главная</a>
+                <a href="{% url 'catalog:catalog' %}" class="nav-link">Каталог</a>
+                <a href="#" class="nav-link">О нас</a>
+                <a href="#" class="nav-link">Заказать</a>
+            </nav>
+            <div class="action-icons">
+                <div class="icon-wrapper">
+                    <div class="icon icon-search">
+                        <img src="{% static 'main/img/decoration/account.png' %}" alt="">
+                        <img src="{% static 'main/img/decoration/bag.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            </header>
+        <main>
+            {% block content %}
+              
+            {% endblock content %}
+        </main>
+        <footer>
+            <div class="content_column2">
+                <div class="container2">
+                    <div class="nav-menu">
+
+                        <a class="nav-item" href="#">Главная</a>
+                        <a class="nav-item" href="#">О нас</a>
+                        <a class="nav-item" href="#">Каталог</a>
+                        <a class="nav-item" href="#">Заказать</a>
+                        <a class="nav-item" href="#">Личный кабинет</a>
+                    </div>
+                    <div class="icons-container">
+                        <img src="{% static 'main/img/decoration/inst.png' %}" alt="">
+                        <img src="{% static 'main/img/decoration/facebook.png' %}" alt="">
+                        <img src="{% static 'main/img/decoration/watsapp.png' %}" alt="">
+                        <img src="{% static 'main/img/decoration/VK.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+    
+</body>
+</html>

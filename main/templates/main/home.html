@@ -1,0 +1,120 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block theme %}theme-dark{% endblock %}
+{% block content %}
+<div class="hero-buttom_content">
+    <div class="container">
+        <div class="header_button_img">
+            <div class="hero-content">
+                <h1 class="hero-title">Цветы, которые вас отражают</h1>
+                <div class="hero-button">
+                    <div class="button-background"></div>
+                    <div class="button-text">Перейти в каталог</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_column">
+        <div class="line"></div>
+        <div class="about-section">
+            <div class="about-content">
+                <div class="about-header">
+                <h2 class="about-title">О нас</h2>
+                <div class="about-text">
+                    <p class="about-paragraph">
+                    <span class="welcome-text">Добро пожаловать!</span>
+                    <br><br>
+                    <span class="description-text">
+                        Мы предлагаем широкий выбор свежих и красивых цветов, подходящих для любого случая и события. Будь то романтический подарок, свадебное украшение или просто способ выразить свою любовь и благодарность, наша команда сделает все возможное, чтобы помочь вам подобрать идеальный букет.
+                    </span>
+                    </p>
+                </div>
+                </div>
+                <div class="about-images">
+                <img class="image-rounded" src="{% static 'main/img/decoration/about_img.jpg' %}" alt="О нас 1">
+                </div>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="catalog">
+            <h2>Каталог</h2>
+            <div class="all_card">
+                <div class="card">
+                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
+                    <div class="card_name">Ванильное небо</div>
+                    <div class="card_price">1800 руб.</div>
+                    <button class="card_button">Выбрать букет</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
+                    <div class="card_name">Ванильное небо</div>
+                    <div class="card_price">1800 руб.</div>
+                    <button class="card_button">Выбрать букет</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
+                    <div class="card_name">Ванильное небо</div>
+                    <div class="card_price">1800 руб.</div>
+                    <button class="card_button">Выбрать букет</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
+                    <div class="card_name">Ванильное небо</div>
+                    <div class="card_price">1800 руб.</div>
+                    <button class="card_button">Выбрать букет</button>
+                </div>
+            </div>
+            <button class="all_catalog">Смотреть все</button>
+        </div>
+        <div class="line"></div>
+        <div class="form_v">
+            <h2>Не смогли выбрать?</h2>
+            <h4>Не проблема! Мы соберем букет по вашему индивидуальному запросу. Заполните форму и мы перезвоним вам в течении 5 минут</h4>
+            <div class="form_v-form">
+                <input type="text" placeholder="Имя*">
+                <input type="number" placeholder="Телефон*">
+                <button class="btn2">Оставить заявку</button>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="payment-content">
+            <img src="{% static 'main/img/decoration/payment_img.jpg' %}" alt="">
+            <div class="payment-content-des">
+                <h3>Оплата и доставка</h3>
+                <p class="p_bold">Доставка осуществляется ежедневно в удобное для вас время <br>
+                    <br>Для заказа выберите букет и оплатите онлайн с помощью банковскои карты или наличными при получении.</p>
+                <div class="var_pay">
+                    <div class="paymant_bank">
+                        <p class="p_bold">Банковские карты</p>
+                        <div class="paymant_bank-icone">
+                            <img class="visa" src="{% static 'main/img/decoration/visa.png' %}" alt="">
+                            <img src="{% static 'main/img/decoration/mastercard.png' %}" alt="">
+                            <img src="{% static 'main/img/decoration/мир.png' %}" alt="">
+                        </div>
+                    </div>
+                    <div class="paymant_bank">
+                        <p class="p_bold">Наличные</p>
+                        <div class="paymant_bank-icone">
+                            <img src="{% static 'main/img/decoration/wallet.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hero-buttom_content2">
+    <div class="zakaz_content">
+        <h2>Закажи свой букет</h2>
+        <div class="zakaz_content-input">
+            <input type="text" placeholder="Кому*">
+            <input type="text" placeholder="От кого*">
+            <input type="text" placeholder="Адрес доставки*">
+            <button class="vabr_flower">Выберите букет</button>
+            <button class="zakaz">Оформить заказ</button>
+        </div>
+    </div>
+</div>
+    {% endblock content %}
