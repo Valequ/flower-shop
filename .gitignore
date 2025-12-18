@@ -1,32 +1,37 @@
-echo "# Python
+
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-
-# Django
-*.sqlite3
-*.log
-db.sqlite3
-
-# Virtual environments
-venv/
-env/
+.mypy_cache/
+.pytest_cache/
 .venv/
-ENV/
+env/
+venv/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
 
-# OS
+*.log
+*.sqlite3
+db.sqlite3
+media/ # Если у тебя есть папка для загруженных пользователями файлов
+staticfiles/ # Папка, куда collectstatic собирает все файлы для продакшена
+
+
+.vscode/ # Файлы настроек VS Code
+.idea/ # Файлы настроек PyCharm/IntelliJ
+*.swp # Vim swap files
+*.swo # Vim swap files
+
+
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db" > .gitignore
+Thumbs.db
+
+node_modules/
+build/
+dist/

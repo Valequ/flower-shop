@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <script src="{% static 'main/js/js.js' %}"></script>
     <title>Букетная</title>
 </head>
 <body>
 
             <header class="header">
-                <img src="{% static 'main/img/decoration/logo.png' %}" alt="">
+                <a href="{% url 'main:home' %}">
+                    <img src="{% static 'main/img/decoration/logo.png' %}" alt="">
+                </a>
             <nav class="nav-menu">
                 <a href="{% url 'main:home' %}" class="nav-link">Главная</a>
                 <a href="{% url 'catalog:catalog' %}" class="nav-link">Каталог</a>
@@ -20,7 +23,9 @@
             <div class="action-icons">
                 <div class="icon-wrapper">
                     <div class="icon icon-search">
-                        <img src="{% static 'main/img/decoration/account.png' %}" alt="">
+                        <a href="{% url 'accounts:profile' %}">
+                            <img src="{% static 'main/img/decoration/account.png' %}" alt="">
+                        </a>
                         <img src="{% static 'main/img/decoration/bag.png' %}" alt="">
                     </div>
                 </div>

@@ -1,0 +1,152 @@
+{% extends "main/base_light.html" %}
+{% load static %}
+{% block content %}
+<div class="content_column">
+    <div class="line2"></div>
+    <div class="profile-container">
+        <h2 class="login-h2">Личный кабинет</h2>
+        
+        <div class="profile-sections">
+            <!-- Блок профиля -->
+            <div class="profile-section profile-info-card">
+                <div class="avatar-container">
+                    <img class="avatar-image" src="{% static 'main/img/decoration/ava.jpg' %}" alt="Аватар">
+                </div>
+                
+                <div class="profile-details">
+                    <div class="user-name">Мария Иванова (Maria Ivanova)</div>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <div class="icon-square">
+                                    <img src="{% static 'main/img/decoration/phone.png' %}" alt="Аватар">
+                                </div>
+                            </div>
+                            <div class="contact-details">
+                                <div class="contact-label">Телефон</div>
+                                <div class="contact-value">+7 (916) 123-45-67</div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="email-icon">
+                                <img src="{% static 'main/img/decoration/email.png' %}" alt="Аватар">
+                            </div>
+                            <div class="contact-details">
+                                <div class="contact-label">Электронная почта</div>
+                                <div class="contact-value">maria.flowers@example.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок корзины -->
+            <div class="cart-section">
+                <h2 class="section-title">Корзина</h2>
+                
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <img class="item-image" src="{% static 'main/img/decoration/flower.jpg' %}" alt="Розовые мечты">                        
+                        <div class="item-details">
+                            <div class="item-header">
+                                <div class="item-name">Розовые мечты</div>
+                                <div class="item-price">1.800₽</div>
+                            </div>
+                            
+                            <div class="item-actions">
+                                <div class="quantity-control">
+                                    <div class="quantity-label">Количество:</div>
+                                    <div class="quantity-selector">
+                                        <button class="quantity-btn">-</button>
+                                        <div class="quantity-value">1</div>
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </div>
+                                <a class="remove-item">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-item">
+                        <img class="item-image" src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="Розовые мечты">
+                        <div class="item-details">
+                            <div class="item-header">
+                                <div class="item-name">Розовые мечты</div>
+                                <div class="item-price">1.800₽</div>
+                            </div>
+                            
+                            <div class="item-actions">
+                                <div class="quantity-control">
+                                    <div class="quantity-label">Количество:</div>
+                                    <div class="quantity-selector">
+                                        <button class="quantity-btn">-</button>
+                                        <div class="quantity-value">1</div>
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </div>
+                                <a class="remove-item">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <div class="total-price">
+                        <div class="total-label">К оплате:</div>
+                        <div class="total-value">3.600₽</div>
+                    </div>
+                    
+                    <div class="payment-method" onclick="togglePayment()">
+                        <div class="payment-label" id="paymentLabel">Выберите способ оплаты</div>
+                        <div class="dropdown-arrow">▼</div>
+                        <div class="payment-options">
+                            <div class="option" onclick="selectPayment('Наличными')">Наличными</div>
+                            <div class="option" onclick="selectPayment('Картой')">Картой</div>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-address">
+                        <input class="address-label" placeholder="Адрес доставки"></input>
+                    </div>
+                    
+                    <button class="checkout-btn">Оформить заказ</button>
+                </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="orders-section">
+                <h2 class="section-title">Мои заказы</h2>
+                
+                <div class="orders-list">
+                    <div class="order-item">
+                        <div class="order-details">
+                            <div class="order-row">
+                                <div class="order-label">Букет:</div>
+                                <div class="order-value">Розовые мечты</div>
+                            </div>
+                            <div class="order-row">
+                                <div class="order-label">Количество:</div>
+                                <div class="order-value">1</div>
+                            </div>
+                            <div class="order-row">
+                                <div class="order-label">Статус:</div>
+                                <div class="order-value">Доставлен</div>
+                            </div>
+                        </div>
+                        <div class="order-number">[001]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+            <a href="#" class="profile-logout">
+                <img src="{% static 'main/img/decoration/logout.png' %}" alt="">
+                <span class="logout-text">Выйти</span>
+            </a>
+        </div>
+    </div>
+
+</div>
+  
+{% endblock content %}

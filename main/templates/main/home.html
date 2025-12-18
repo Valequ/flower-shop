@@ -2,6 +2,7 @@
 {% load static %}
 {% block theme %}theme-dark{% endblock %}
 {% block content %}
+<div class="line3"></div>
 <div class="hero-buttom_content">
     <div class="container">
         <div class="header_button_img">
@@ -16,7 +17,7 @@
     </div>
 </div>
 <div class="content_column">
-        <div class="line"></div>
+        <div class="l"></div>
         <div class="about-section">
             <div class="about-content">
                 <div class="about-header">
@@ -26,7 +27,7 @@
                     <span class="welcome-text">Добро пожаловать!</span>
                     <br><br>
                     <span class="description-text">
-                        Мы предлагаем широкий выбор свежих и красивых цветов, подходящих для любого случая и события. Будь то романтический подарок, свадебное украшение или просто способ выразить свою любовь и благодарность, наша команда сделает все возможное, чтобы помочь вам подобрать идеальный букет.
+                        Мы предлагаем широкий выбор свежих и красивых цветов, подходящих для любого случая и события. <br>Будь то романтический подарок, свадебное украшение или просто способ выразить свою любовь и благодарность, наша команда сделает все возможное, чтобы помочь вам подобрать идеальный букет.
                     </span>
                     </p>
                 </div>
@@ -79,7 +80,7 @@
         </div>
         <div class="line"></div>
         <div class="payment-content">
-            <img src="{% static 'main/img/decoration/payment_img.jpg' %}" alt="">
+            <img class="payment-content-img" src="{% static 'main/img/decoration/payment_img.jpg' %}" alt="">
             <div class="payment-content-des">
                 <h3>Оплата и доставка</h3>
                 <p class="p_bold">Доставка осуществляется ежедневно в удобное для вас время <br>
@@ -94,7 +95,7 @@
                         </div>
                     </div>
                     <div class="paymant_bank">
-                        <p class="p_bold">Наличные</p>
+                        <p class="p_bold1">Наличные</p>
                         <div class="paymant_bank-icone">
                             <img src="{% static 'main/img/decoration/wallet.png' %}" alt="">
                         </div>

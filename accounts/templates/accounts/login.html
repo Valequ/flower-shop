@@ -1,0 +1,25 @@
+{% extends "main/base_light.html" %}
+{% load static %}
+{% block content %}
+<div class="login-back">
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Вход</h2>
+            <div class="login-form-input-btn">
+                <div class="login-form-input">
+                    <input type="text" placeholder="Логин">
+                    <input type="text" placeholder="Пароль">
+                </div>
+                <button class="login-form-btn">Войти</button>
+            </div>
+            <div class="no-login">
+                <p>У вас нет аккаунта?</p>
+                <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+  
+{% endblock content %}

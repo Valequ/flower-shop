@@ -1,0 +1,50 @@
+{% extends "main/base_light.html" %}
+{% load static %}
+{% block content %}
+<div class="login-back">
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Регистрация</h2>
+            <div class="login-form-input-btn">
+                <div class="login-form-input">
+                    <input type="text" placeholder="Логин">
+                    <input type="text" placeholder="Никнейм">
+                    <input type="text" placeholder="ФИО">
+                    <input type="text" placeholder="Почта">
+                    <input type="text" placeholder="+7">
+                    <input type="text" placeholder="Пароль">
+                </div>
+                <div class="register-cheked">
+                    <label class="check-btn-label">
+                        <input type="checkbox" class="check-input">
+                        <span class="custom-checkbox"></span>
+                        <span class="btn-text">Согласие на обработку персональных данных</span>
+                    </label>
+                </div>
+                <div class="register-cheked">
+                    <label class="check-btn-label">
+                        <input type="checkbox" class="check-input">
+                        <span class="custom-checkbox"></span>
+                        <span class="btn-text">Договор публичной оферты</span>
+                    </label>
+                </div>
+                <div class="register-cheked">
+                    <label class="check-btn-label">
+                        <input type="checkbox" class="check-input">
+                        <span class="custom-checkbox"></span>
+                        <span class="btn-text">Политика конфиденциальности</span>
+                    </label>
+                </div>
+                <button class="login-form-btn">Зарегистрироваться</button>
+            </div>
+            <div class="no-login">
+                <p>Уже есть аккаунт?</p>
+                <a href="{% url 'accounts:login' %}">Войти</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+  
+{% endblock content %}
