@@ -14,8 +14,8 @@ venv/
 *.log
 *.sqlite3
 db.sqlite3
-media/ # Если у тебя есть папка для загруженных пользователями файлов
-staticfiles/ # Папка, куда collectstatic собирает все файлы для продакшена
+media/ 
+staticfiles/ 
 
 
 .vscode/ # Файлы настроек VS Code

@@ -12,9 +12,9 @@
             <header class="header">
 
                 <a href="{% url 'main:home' %}">
-                    <img src="{% static 'main/img/decoration/logo_black.png' %}" alt="">
+                    <img class="header_logo" src="{% static 'main/img/decoration/logo_black.png' %}" alt="">
                 </a>
-            <nav class="nav-menu">
+            <nav class="nav-menu" id="nav-menu">
                 <a href="{% url 'main:home' %}" class="nav-link2">Главная</a>
                 <a href="{% url 'catalog:catalog' %}" class="nav-link2">Каталог</a>
                 <a href="#" class="nav-link2">О нас</a>
@@ -28,6 +28,11 @@
                         </a>
                         <img src="{% static 'main/img/decoration/bag_black.png' %}" alt="">
                     </div>
+                    <button class="burger" id="burger-btn" aria-label="Открыть меню">
+                        <span class="burger-line2"></span>
+                        <span class="burger-line2"></span>
+                        <span class="burger-line2"></span>
+                    </button>
                 </div>
             </div>
             </header>
@@ -39,7 +44,7 @@
         <footer>
             <div class="content_column2">
                 <div class="container2">
-                    <div class="nav-menu">
+                    <div class="nav-menu2">
 
                         <a class="nav-item" href="{% url 'main:home' %}">Главная</a>
                         <a class="nav-item" href="#">О нас</a>
