@@ -6,83 +6,111 @@
     <div class="catalog-container">
         <div class="filters-sidebar">
             <h1 class="catalog-title">Каталог</h1>
-            
-            <div class="search-box">
-                <input class="search-text" placeholder="Поиск товаров"></input>
-                <div class="search-icon">
-                    <img src="{% static 'main/img/decoration/sesrch.png' %}" alt="">
+            <form class="catalog-form" method="GET" action="{% url 'catalog:catalog' %}" id="search-form">
+                <div class="search-box">
+                    <div class="catalog-form2">
+                        <input class="search-text" name="q" placeholder="Поиск товаров" value="{{ request.GET.q }}">
+                        <div class="search-icon" onclick="document.getElementById('search-form').submit()">
+                            <img src="{% static 'main/img/decoration/sesrch.png' %}" alt="">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="categories-list">
-                <div class="category-item">Букеты роз</div>
-                <div class="category-item">Полевые цветы</div>
-                <div class="category-item">Свадебные</div>
-                <div class="category-item">Экзотические</div>
-                <div class="category-item">Комнатные растения</div>
-                <div class="category-item">Подарочные наборы</div>
-            </div>
-            
-            <div class="price-inputs">
-                <div class="price-field">
-                    <span class="price-label">от</span>
-                    <input type="number" class="price-input" value="60" min="0">
-                    <span class="price-currency">₽</span>
+                {% if request.GET.category %}
+                    <input type="hidden" name="category" value="{{ request.GET.category }}">
+                {% endif %}
+                
+                <div class="categories-list">
+                    <a href="{% url 'catalog:catalog' %}" class="category-item {% if not current_category %}active{% endif %}">
+                        Все товары
+                    </a>
+                    {% for cat in categories %}
+                    <a href="{% url 'catalog:catalog' %}?category={{ cat.slug }}" class="category-item {% if current_category == cat.slug %}active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                    {% endfor %}
                 </div>
-                <div class="price-divider">—</div>
-                <div class="price-field">
-                    <span class="price-label">до</span>
-                    <input type="number" class="price-input" value="60000" max="100000">
-                    <span class="price-currency">₽</span>
+                
+                <div class="price-inputs">
+                    <div class="price-field">
+                        <span class="price-label">от</span>
+                        <input type="number" class="price-input" name="min_price" value="{{ request.GET.min_price|default:'60'}}" min="0">
+                        <span class="price-currency">₽</span>
+                    </div>
+                    <div class="price-divider">—</div>
+                    <div class="price-field">
+                        <span class="price-label">до</span>
+                        <input type="number" class="price-input" name="max_price" value="{{ request.GET.max_price|default:'60000'}}"  max="100000">
+                        <span class="price-currency">₽</span>
+                    </div>
                 </div>
-            </div>
-             <button class="apply-filter">Фильтрация</button>
+                <!-- <button class="apply-filter" onclick="document.getElementById('price-filter-form').submit()">Фильтрация</button> -->
+                <!-- <button class="price-apply-btn"  type="submit" >Фильтрация</button> -->
+                <button class="apply-filter" type="submit">Фильтрация</button>
+
+            </form>
         </div>
         <div class="catalog_column">
             <div class="products-grid">
-    
-                <div class="card">
-                        <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                        <div class="card_name">Ванильное небо</div>
-                        <div class="card_price">1800 руб.</div>
-                        <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                        <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                        <div class="card_name">Ванильное небо</div>
-                        <div class="card_price">1800 руб.</div>
-                        <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                        <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                        <div class="card_name">Ванильное небо</div>
-                        <div class="card_price">1800 руб.</div>
-                        <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                        <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                        <div class="card_name">Ванильное небо</div>
-                        <div class="card_price">1800 руб.</div>
-                        <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                        <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                        <div class="card_name">Ванильное небо</div>
-                        <div class="card_price">1800 руб.</div>
-                        <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                        <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                        <div class="card_name">Ванильное небо</div>
-                        <div class="card_price">1800 руб.</div>
-                        <button class="card_button">Выбрать букет</button>
-                </div>
-            </div>
+                {% for product in products %}
+                    <div class="card">
+                        <img src="{{ product.get_main_image_url }}" alt="{{ product.name }}">
+                        <div class="card_name">{{ product.name }}</div>
+                        <div class="card_price">
+                            {% if product.has_discount %}
+                            {{ product.price|floatformat:0 }} руб.
+                            {% else %}
+                            {{ product.price|floatformat:0 }} руб.
+                            {% endif %}
+                        </div>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'catalog:product' product.slug %}"><button class="card_button">Выбрать букет</button></a>
+                        {% else %}
+                            <a data-product-url="{% url 'catalog:product' product.slug %}"
+                                onclick="requireLogin(this.getAttribute('data-product-url'))">
+                            <button class="card_button">Выбрать букет</button>
+                        </a>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <div class="no-products">
+                        <p>Товары не найдены</p>
+                    </div>
+                {% endfor %}
+            </div>        
+            {% if products.has_other_pages %}
             <div class="page-numbers">
-                <button class="page-number active" data-page="1">1</button>
-                <button class="page-number" data-page="2">2</button>
-                <button class="page-number" data-page="3">3</button>
+                {% if products.has_previous %}
+                <a href="?page={{ products.previous_page_number }}
+                    {% if current_category %}&category={{ current_category }}{% endif %}
+                    {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                    {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                    {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" 
+                class="page-number">‹</a>
+                {% endif %}
+                
+                {% for num in products.paginator.page_range %}
+                    {% if num == products.number %}
+                    <span class="page-number active">{{ num }}</span>
+                    {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                    <a href="?page={{ num }}
+                        {% if current_category %}&category={{ current_category }}{% endif %}
+                        {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                        {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                        {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" 
+                    class="page-number">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}
+                    {% if current_category %}&category={{ current_category }}{% endif %}
+                    {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                    {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                    {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" 
+                class="page-number">›</a>
+                {% endif %}
             </div>
+            {% endif %}
         </div>
     </div>
     <div class="line"></div>

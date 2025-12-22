@@ -17,8 +17,8 @@
             <nav class="nav-menu" id="nav-menu">
                 <a href="{% url 'main:home' %}" class="nav-link">Главная</a>
                 <a href="{% url 'catalog:catalog' %}" class="nav-link">Каталог</a>
-                <a href="#" class="nav-link">О нас</a>
-                <a href="#" class="nav-link">Заказать</a>
+                <a href="{% url 'main:home' %}#about-section" class="nav-link" id="about-link">О нас</a>
+                <a href="{% url 'accounts:profile' %}#cart1" id="cart-link" class="nav-link">Заказать</a>
             </nav>
             <div class="action-icons">
                 <div class="icon-wrapper">
@@ -26,7 +26,12 @@
                         <a href="{% url 'accounts:profile' %}">
                             <img src="{% static 'main/img/decoration/account.png' %}" alt="">
                         </a>
-                        <img src="{% static 'main/img/decoration/bag.png' %}" alt="">
+                        <a href="{% url 'accounts:profile' %}#cart1" id="cart-link" class="cart-link">
+                            <img src="{% static 'main/img/decoration/bag.png' %}" alt="Корзина">
+                            {% if user.is_authenticated and cart_item_count > 0 %}
+                                <span class="cart-counter">{{ cart_item_count }}</span>
+                            {% endif %}
+                        </a>
                     </div>
                     <button class="burger" id="burger-btn" aria-label="Открыть меню">
                         <span class="burger-line"></span>
@@ -37,6 +42,14 @@
             </div>
             </header>
         <main>
+            <div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: none;">
+                <div id="notification" class="notification">
+                    <div class="notification-content">
+                        <span id="notification-text"></span>
+                    </div>
+                    <button class="notification-close">&times;</button>
+                </div>
+            </div>
             {% block content %}
               
             {% endblock content %}
@@ -45,12 +58,11 @@
             <div class="content_column2">
                 <div class="container2">
                     <div class="nav-menu2">
-
-                        <a class="nav-item" href="#">Главная</a>
-                        <a class="nav-item" href="#">О нас</a>
-                        <a class="nav-item" href="#">Каталог</a>
-                        <a class="nav-item" href="#">Заказать</a>
-                        <a class="nav-item" href="#">Личный кабинет</a>
+                        <a class="nav-item" href="{% url 'main:home' %}">Главная</a>
+                        <a class="nav-item" href="{% url 'main:home' %}#about-section" class="nav-link" id="about-link">О нас</a>
+                        <a class="nav-item" href="{% url 'catalog:catalog' %}">Каталог</a>
+                        <a class="nav-item" href="{% url 'accounts:profile' %}#cart1" id="cart-link" class="nav-link">Заказать</a>
+                        <a class="nav-item" href="">Личный кабинет</a>
                     </div>
                     <div class="icons-container">
                         <img src="{% static 'main/img/decoration/inst.png' %}" alt="">

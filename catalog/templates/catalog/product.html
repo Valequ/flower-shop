@@ -4,28 +4,35 @@
 <div class="content_column">
     <div class="line2"></div>
     <div class="product-container">
-            <img class="product-image" src="{% static 'main/img/decoration/flower.jpg' %}" alt="Розовые мечты">
-            
+            <img class="product-image" src="{{ product.get_main_image_url }}" alt="{{ product.name }}">
             <div class="product-info">
                 <div class="product-header">
-                    <h1 class="product-title">Розовые мечты</h1>
+                    <h1 class="product-title">{{ product.name }}</h1>
                     
                     <div class="product-prices">
-                        <div class="product-price-current">1.800₽</div>
-                        <div class="product-price-old">3.600₽</div>
+                        <div class="product-price-current">{{ product.price|floatformat:0 }}₽</div>
+                        {% if product.has_discount %}
+                        <div class="product-price-old">{{ product.old_price|floatformat:0 }}₽</div>
+                        {% endif %}
                     </div>
                     
                     <p class="product-description">
-                        Букет «Розовые мечты» — нежность в каждом лепестке. 
-                        Пышная композиция из розовых роз, пионов и эустом, 
-                        окутанная облаком зелени. Идеальный символ любви, 
-                        нежности и восхищения.
+                        {{ product.description|linebreaksbr }}
                     </p>
                 </div>
-                
-                <button class="add-to-cart-btn">
-                    В корзину
-                </button>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'accounts:add_to_cart' product.slug %}">
+                        {% csrf_token %}
+                        <button type="submit" class="add-to-cart-btn">
+                            В корзину
+                        </button>
+                    </form>
+                {% else %}
+                    <a data-product-url="{% url 'catalog:product' product.slug %}"
+                   onclick="requireLogin(this.getAttribute('data-product-url'))">
+                    <button class="add-to-cart-btn">В корзину</button>
+                    </a>
+                {% endif %}
             </div>
         </div>
         <div class="line"></div>

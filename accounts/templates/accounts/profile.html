@@ -5,16 +5,22 @@
     <div class="line2"></div>
     <div class="profile-container">
         <h2 class="login-h2">Личный кабинет</h2>
-        
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
         <div class="profile-sections">
-            <!-- Блок профиля -->
             <div class="profile-section profile-info-card">
                 <div class="avatar-container">
-                    <img class="avatar-image" src="{% static 'main/img/decoration/ava.jpg' %}" alt="Аватар">
+                    <img class="avatar-image" id="profile-avatar" 
+                    src="{{ user.get_avatar_url }}" 
+                    alt="Аватар" 
+                    data-default-avatar="{% static 'main/img/decoration/ava.jpg' %}"
+                    onerror="this.onerror=null; this.src=this.dataset.defaultAvatar;">
                 </div>
-                
                 <div class="profile-details">
-                    <div class="user-name">Мария Иванова (Maria Ivanova)</div>
+                    <div class="user-name" id="user-full-name">Загрузка...</div>
                     
                     <div class="contact-info">
                         <div class="contact-item">
@@ -25,7 +31,7 @@
                             </div>
                             <div class="contact-details">
                                 <div class="contact-label">Телефон</div>
-                                <div class="contact-value">+7 (916) 123-45-67</div>
+                                <div class="contact-value" id="user-phone">Загрузка...</div>
                             </div>
                         </div>
                         
@@ -33,117 +39,151 @@
                             <div class="email-icon">
                                 <img src="{% static 'main/img/decoration/email.png' %}" alt="Аватар">
                             </div>
+                            
                             <div class="contact-details">
-                                <div class="contact-label">Электронная почта</div>
-                                <div class="contact-value">maria.flowers@example.com</div>
+                                <div class="contact-label"> Электронная почта </div>
+                                <div class="contact-value" id="user-email">Загрузка...</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Блок корзины -->
-            <div class="cart-section">
+            <a href="{% url 'accounts:edit_profile' %}"  
+                style="background: #CA8B99; color: white; padding: 10px 20px; 
+                        border-radius: 4px; text-decoration: none;">
+                    Редактировать профиль
+            </a>
+            <div class="cart-section" id="cart1">
                 <h2 class="section-title">Корзина</h2>
                 
                 <div class="cart-items">
+                    {% for item in cart_items %}
                     <div class="cart-item">
-                        <img class="item-image" src="{% static 'main/img/decoration/flower.jpg' %}" alt="Розовые мечты">                        
+                        <img class="item-image" src="{{ item.product.get_main_image_url }}" alt="{{ item.product.name }}">
                         <div class="item-details">
                             <div class="item-header">
-                                <div class="item-name">Розовые мечты</div>
-                                <div class="item-price">1.800₽</div>
+                                <div class="item-name">{{ item.product.name }}</div>
+                                <div class="item-price">{{ item.product.price|floatformat:0 }}₽</div>
                             </div>
                             
                             <div class="item-actions">
                                 <div class="quantity-control">
                                     <div class="quantity-label">Количество:</div>
                                     <div class="quantity-selector">
-                                        <button class="quantity-btn">-</button>
-                                        <div class="quantity-value">1</div>
-                                        <button class="quantity-btn">+</button>
+                                        <a href="{% url 'accounts:update_cart_item' item.id %}?action=decrease">
+                                            <button class="quantity-btn">-</button>
+                                        </a>
+                                        <div class="quantity-value">{{ item.quantity }}</div>
+                                        <a href="{% url 'accounts:update_cart_item' item.id %}?action=increase">
+                                            <button class="quantity-btn">+</button>
+                                        </a>
                                     </div>
                                 </div>
-                                <a class="remove-item">Удалить</a>
+                                <a href="{% url 'accounts:remove_from_cart' item.id %}" class="remove-item">Удалить</a>
                             </div>
                         </div>
                     </div>
-                    <div class="cart-item">
-                        <img class="item-image" src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="Розовые мечты">
-                        <div class="item-details">
-                            <div class="item-header">
-                                <div class="item-name">Розовые мечты</div>
-                                <div class="item-price">1.800₽</div>
-                            </div>
-                            
-                            <div class="item-actions">
-                                <div class="quantity-control">
-                                    <div class="quantity-label">Количество:</div>
-                                    <div class="quantity-selector">
-                                        <button class="quantity-btn">-</button>
-                                        <div class="quantity-value">1</div>
-                                        <button class="quantity-btn">+</button>
-                                    </div>
-                                </div>
-                                <a class="remove-item">Удалить</a>
-                            </div>
-                        </div>
+                    {% empty %}
+                    <div class="empty-cart">
+                        <p>Корзина пуста</p>
                     </div>
+                    {% endfor %}
                 </div>
-
+                {% if cart_items %}
                 <div class="checkout-section">
-                    <div class="total-price">
-                        <div class="total-label">К оплате:</div>
-                        <div class="total-value">3.600₽</div>
-                    </div>
-                    
-                    <div class="payment-method" onclick="togglePayment()">
-                        <div class="payment-label" id="paymentLabel">Выберите способ оплаты</div>
-                        <div class="dropdown-arrow">▼</div>
-                        <div class="payment-options">
-                            <div class="option" onclick="selectPayment('Наличными')">Наличными</div>
-                            <div class="option" onclick="selectPayment('Картой')">Картой</div>
+                    <form class="payment_method-form" method="post" action="{% url 'accounts:create_order' %}">
+                    {% csrf_token %}
+                        <div class="total-price">
+                            <div class="total-label">К оплате:</div>
+                            <div class="total-value">{{ cart_total_price|floatformat:0 }}₽</div>
                         </div>
-                    </div>
-                    
-                    <div class="delivery-address">
-                        <input class="address-label" placeholder="Адрес доставки"></input>
-                    </div>
-                    
-                    <button class="checkout-btn">Оформить заказ</button>
+                        
+                        <select name="payment_method" class="payment-select" required>
+                            <option class="payment-options" value="" selected disabled>Выберите способ оплаты</option>
+                            <option class="option" value="cash">Наличными</option>
+                            <option class="option"  value="card">Картой</option>
+                        </select>
+                        
+                        <div class="delivery-address">
+                            <input type="text" name="delivery_address" class="address-label" 
+                                placeholder="Адрес доставки*" required>
+                        </div>
+                        
+                        <button type="submit" class="checkout-btn">Оформить заказ</button>
+
+
+                    </form>
                 </div>
+                {% endif %}
             </div>
+            
             <div class="line"></div>
+
 
             <div class="orders-section">
                 <h2 class="section-title">Мои заказы</h2>
                 
                 <div class="orders-list">
+                    {% if orders %}
+                    {% for order in orders %}
                     <div class="order-item">
                         <div class="order-details">
                             <div class="order-row">
                                 <div class="order-label">Букет:</div>
-                                <div class="order-value">Розовые мечты</div>
+                                <div class="order-value">
+                                    {% if order.items.all %}
+                                        {% for item in order.items.all|slice:":2" %}
+                                            {{ item.product.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                        {% if order.items.count > 2 %}...{% endif %}
+                                    {% else %}
+                                        Нет товаров
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="order-row">
                                 <div class="order-label">Количество:</div>
-                                <div class="order-value">1</div>
+                                <div class="order-value">
+                                    {% if order.items.all %}
+                                        {{ order.items.count }}
+                                    {% else %}
+                                        0 
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="order-row">
                                 <div class="order-label">Статус:</div>
-                                <div class="order-value">Доставлен</div>
+                                <div class="order-value">
+                                    {% if order.status == 'new' %}Новый
+                                    {% elif order.status == 'processing' %}В обработке
+                                    {% elif order.status == 'delivering' %}Доставляется
+                                    {% elif order.status == 'completed' %}Доставлен
+                                    {% elif order.status == 'cancelled' %}Отменен
+                                    {% else %}{{ order.status }}{% endif %}
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                                <div>Номер: {{ order.order_number }}</div>
+                                <div>Дата: {{ order.created_at|date:"d.m.Y" }}</div>
+                                <div>Сумма: {{ order.total_price|floatformat:0 }}₽</div>
                             </div>
                         </div>
-                        <div class="order-number">[001]</div>
+                        <div class="order-number">[{{ order.order_number|slice:3 }}]</div>
                     </div>
+                    {% endfor %}
+                    {% else %} 
+                    <div class="empty-orders">
+                        <p>У вас еще нет заказов</p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="divider"></div>
-            <a href="#" class="profile-logout">
-                <img src="{% static 'main/img/decoration/logout.png' %}" alt="">
-                <span class="logout-text">Выйти</span>
-            </a>
+                    <a class="profile-logout" href="#" onclick="logout(); return false;">
+                        <img src="{% static 'main/img/decoration/logout.png' %}" alt="">  
+                        <span >Выйти</span>
+                    </a>
         </div>
     </div>
 

@@ -1,6 +1,5 @@
 {% extends "main/base.html" %}
 {% load static %}
-{% block theme %}theme-dark{% endblock %}
 {% block content %}
 <div class="line3"></div>
 <div class="hero-buttom_content">
@@ -10,7 +9,10 @@
                 <h1 class="hero-title">Цветы, которые вас отражают</h1>
                 <div class="hero-button">
                     <div class="button-background"></div>
-                    <div class="button-text">Перейти в каталог</div>
+                    <a href="{% url 'catalog:catalog' %}">
+
+                        <div class="button-text">Перейти в каталог</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -18,7 +20,7 @@
 </div>
 <div class="content_column">
         <div class="l"></div>
-        <div class="about-section">
+        <div class="about-section" id="about-section">
             <div class="about-content">
                 <div class="about-header">
                 <h2 class="about-title">О нас</h2>
@@ -41,32 +43,27 @@
         <div class="catalog">
             <h2>Каталог</h2>
             <div class="all_card">
+                {% for product in featured_products %}
                 <div class="card">
-                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                    <div class="card_name">Ванильное небо</div>
-                    <div class="card_price">1800 руб.</div>
-                    <button class="card_button">Выбрать букет</button>
+                    <img src="{{ product.get_main_image_url }}" alt="{{ product.name }}">
+                    <div class="card_name">{{ product.name }}</div>
+                    <div class="card_price">{{ product.price|floatformat:0 }} руб.</div>
+                    {% if user.is_authenticated %}
+                            <a href="{% url 'catalog:product' product.slug %}"><button class="card_button">Выбрать букет</button></a>
+                    {% else %}
+                            <a data-product-url="{% url 'catalog:product' product.slug %}"
+                                onclick="requireLogin(this.getAttribute('data-product-url'))">
+                            <button class="card_button">Выбрать букет</button>
+                        </a>
+                    {% endif %}
                 </div>
-                <div class="card">
-                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                    <div class="card_name">Ванильное небо</div>
-                    <div class="card_price">1800 руб.</div>
-                    <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                    <div class="card_name">Ванильное небо</div>
-                    <div class="card_price">1800 руб.</div>
-                    <button class="card_button">Выбрать букет</button>
-                </div>
-                <div class="card">
-                    <img src="{% static 'main/img/decoration/whiteRose.jpg' %}" alt="">
-                    <div class="card_name">Ванильное небо</div>
-                    <div class="card_price">1800 руб.</div>
-                    <button class="card_button">Выбрать букет</button>
-                </div>
+                {% empty %}
+                    <p>Товары не найдены</p>
+                {% endfor %}
             </div>
-            <button class="all_catalog">Смотреть все</button>
+            <a href="{% url 'catalog:catalog' %}">
+                <button class="all_catalog">Смотреть все</button>
+            </a>
         </div>
         <div class="line"></div>
         <div class="form_v">
