@@ -22,9 +22,13 @@ from .forms import AvatarUploadForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .models import CartItem, Order, OrderItem
 from catalog.models import Product
+from django.http import HttpResponse
+import json
+from datetime import datetime
+
 
 @login_required
 def upload_avatar(request):
@@ -274,3 +278,27 @@ def create_order(request):
     
     return redirect('accounts:profile')
 
+
+@login_required
+def download_user_data(request):
+    user = request.user
+    
+    user_data = {
+        "personal_info": {
+            "username": user.username,
+            "email": user.email,
+            "full_name": user.full_name,
+            "phone": user.phone,
+            "date_joined": user.date_joined.strftime("%Y-%m-%d %H:%M:%S"),
+            "last_login": user.last_login.strftime("%Y-%m-%d %H:%M:%S") if user.last_login else None,
+        },
+    }
+    
+    json_data = json.dumps(user_data, indent=2, ensure_ascii=False)
+    
+    filename = f"user_data_{user.username}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    
+    response = HttpResponse(json_data, content_type='application/json')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    
+    return response

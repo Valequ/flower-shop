@@ -2332,7 +2332,25 @@ color: #fff;
     width: 140px;
 }
 
-
+.profile-download{
+    display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 28px;
+        border: 1px solid #CA8B99;
+        border-radius: 12px;
+        background: transparent;
+        color: #CA8B99;
+        font-family: 'Forum', serif;
+        font-size: 20px;
+        font-weight: 400;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+}
 @media screen and (max-width:376px){
     .header_logo{
         width: 84px;
